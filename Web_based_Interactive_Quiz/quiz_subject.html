@@ -1,0 +1,297 @@
+<!-- Name : Pooja Nanjundaswamy Student ID : W1177463 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Quiz</title>
+	<meta charset="utf-8">
+	<script src="question.js"></script>
+	<script>
+var pos=0,question,noOfChoices=0,i=0,options,answered,correct=0,wrong=0,questionType;
+var maxQuestions=5, counter=0;
+var q = [0,0,0,0,0,0,0,0,0,0];
+var subjects = [0,0,0];
+var subjectToday;
+var mins=3,secs=0;
+var timer;
+function displayQuestion()
+{	
+	if(counter >= maxQuestions)
+	{
+		//end the quiz when all the questions are answered
+		endQuiz();
+		return false;
+	}
+	
+	//select random question from the category
+	generateRandomNumber();
+	document.getElementById("qno").innerHTML = "<p>Question : "+(counter+1)+"</p>";
+	document.getElementById("qno").innerHTML += "<div id='correct' class='clockStyle'>"+"Correct: "+correct+"</div>";
+	document.getElementById("qno").innerHTML += "<div id='wrong' class='clockStyle'>"+"Wrong: "+wrong+"</div>";
+	document.getElementById("qno").innerHTML += "<div id='clockDisplay' class='clockStyle'></div>";
+	
+	//fetch the question and questionType
+	question = questions[subjectToday][pos]["question"];
+	questionType = questions[subjectToday][pos]["questionType"];	
+	
+	document.getElementById("test").innerHTML = "<h3 style='color:violet;'>"+question+"</h3>";
+	if(questionType == "1")
+	{
+		//For type 1 question, display all the choices 
+		noOfChoices = questions[subjectToday][pos]["choices"].length;
+		for(i=0;i<noOfChoices;i++)
+		{
+			document.getElementById("test").innerHTML += "<input type='radio' name='choicelist' id='id'+i value='"+questions[subjectToday][pos]["choices"][i]+"'><label style='color:yellow;' for='id"+i+"'>"+questions[subjectToday][pos]["choices"][i]+"</label><br>"; 
+		}
+	}
+	else 
+	{
+		//For type 2 question, display a textbox for entering the answer
+		document.getElementById("test").innerHTML += "<input type='text' name='textfield' id='textans'><br>";
+	}
+	
+	document.getElementById("test").innerHTML += "<br><button id='submit' onclick='checkAns()'>Submit</button>";
+	//call the timer to run
+	setTimer();
+}
+
+//setTimer() runs the timer for 3 minutes
+function setTimer()
+{	
+	var elt = document.getElementById("clockDisplay");
+
+	if(secs<10)
+	{
+		elt.innerHTML = "Time left: 0"+mins+" : 0"+ secs;
+	}
+	else
+	{
+		elt.innerHTML = "Time left: 0"+mins+" : "+ secs;
+	}
+	
+	if(mins==0 && secs==0)
+	{
+		clearTimeout(timer);	
+		endQuiz();
+	}
+	else if(secs==0)
+	{
+		mins--;
+		secs=59;
+	}
+	else
+	{
+		secs--;
+	}	
+	
+	timer = setTimeout(setTimer, 1000);
+}
+
+//generate random question from the category
+function generateRandomNumber()
+{
+	var flag=true;
+	while(flag)
+	{
+		rand = Math.floor(Math.random()*q.length); 
+		if(q[rand]==0)
+		{
+			q[rand]=1;
+			flag=false;
+			break;
+		}		
+	}
+	pos = rand;
+}
+
+//validation of answer
+function checkAns()
+{	
+	if(questionType == "1")
+	{
+		options = document.getElementsByName("choicelist");
+		for(var j=0;j<options.length;j++)
+		{
+			if(options[j].checked)
+			{
+				answered = options[j].value;
+			}
+		}
+		if(answered == questions[subjectToday][pos]["correctChoice"])
+		{
+			correct++;		
+		}		
+		else
+		{
+			wrong++;
+		}
+	}
+	else
+	{
+		if((document.getElementById("textans").value.toUpperCase()) == questions[subjectToday][pos]["correctAnswer"].toUpperCase())
+		{
+			correct++;			
+		}
+		else
+		{
+			wrong++;
+		}
+	}
+	counter++;
+	displayQuestion();
+}
+
+//displaying the score based on correct and wrong answers
+function endQuiz()
+{
+	document.getElementById("test").innerHTML = "<h2 style='font-style:italic;color:#ffd9b3'>You scored "+correct+" out of "+maxQuestions+"</h2>";
+	if(correct == 0)
+		wrong = maxQuestions;
+	if(correct == maxQuestions)
+	{
+		document.getElementById("test").innerHTML += "<h2 style='font-style:italic;color:violet'>Congratulations buddy .. You are simply awesome!!!</h2>";		
+	}
+	else if(wrong == maxQuestions)
+	{
+		document.getElementById("test").innerHTML += "<h2 style='font-style:italic;color:violet'>Sorry buddy .. You need to improve a lot!!!</h2>";
+	}
+	document.getElementById("qno").innerHTML = "Quiz completed";
+	counter=0; correct=0;wrong=0;
+	document.getElementById("nextButton").disabled = true;
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("endButton").disabled = true;
+	clearTimeout(timer);	
+}
+
+//start the quiz
+function startQuiz()
+{
+	document.getElementById("startButton").disabled = true;
+	document.getElementById("nextButton").disabled = false;
+	document.getElementById("endButton").disabled = false;
+	pos=0;correct=0;wrong=0;
+	counter=0;
+	q = [0,0,0,0,0,0,0,0,0,0];
+	mins=3;secs=0;
+	displayQuestion();
+}
+
+//Load the page with topic and current date
+function loadPage()
+{
+	document.getElementById("test").innerHTML = "<p style='font-style:italic;color:violet'>How much do you know about everything? </p><p style='font-style:italic;color:violet'>Take this quiz and let's see what you got! </p><p style='font-style:italic;color:#ffd9b3'>(The questions are random.)</p>";
+	chooseSubjectForTheDay();
+	document.getElementById("subjectDay").innerHTML = "<b>Today's topic : "+subjects_array[subjectToday]+"</b>";
+	document.getElementById("getDate").innerHTML = "<b>Today's date : "+getTodayDate()+"</b>";
+	document.getElementById("nextButton").disabled = true;
+	document.getElementById("endButton").disabled = true;
+}
+
+//Get today's date
+function getTodayDate()
+{
+	var d = new Date();
+	return (d.getMonth()+1) + " / "+ d.getDate() + " / " +d.getFullYear();
+}
+
+//Get cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+//Set cookie for chosen subject 
+function setCookie(cname,cvalue)
+{
+	//Cookie expires at 23:59:59 the current day
+    var date = new Date();
+	var midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+    var expires = "expires=" + midnight.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+
+//Choose random subject
+function chooseRandomSubject()
+{
+	var flag=true;
+	var chosen;
+	while(flag)
+	{
+		rand = Math.floor(Math.random()*(subjects.length)); 
+		if(subjects[rand]==0)
+		{
+			subjects[rand]=1;
+			flag=false;
+			//chosen = subjects_array[rand];
+			break;
+		}		
+	}
+	chosen = rand;
+	return chosen;	
+}
+
+//Check for cookie by name subject, if not present choose a subject randomly and set the cookie
+function chooseSubjectForTheDay()
+{		
+	var subject=getCookie("subject");
+	
+    if (subject!="")
+	{	
+		//the subject for the day remains the same throughout the day - getting the subject through cookie		
+    }
+	else
+	{
+		//choose random subject when the user first visits the page, save it in a cookie
+		subject = chooseRandomSubject();
+		if (subject != "" && subject != null)
+		{
+			setCookie("subject", subject);			
+		}
+	}
+	subjectToday = subject;
+}
+
+window.addEventListener("load", loadPage, false);
+</script>
+
+</head>
+
+<body>
+<div id="wrapper">
+
+<div class="header">    
+</div>
+<div class="title">    
+	<h2 style="font-style:oblique;color:orange;" id="subjectDay"></h2>
+	<p style="font-style:normal;font-weight:bold;color:#80aaff;" id="getDate"> </p> 
+</div>
+<div class="score">    
+<p id="qno"></p>
+</div>
+<div id="test"></div>
+<br>
+<div class="control">
+	<button id="startButton" onclick='startQuiz()'>Start</button>
+	<button id="nextButton" onclick='checkAns()'>Next Question</button>
+	<button id="endButton" onclick='endQuiz()'>Quit</button>
+</div>
+<div class="footer">
+	<p>
+		&#169; 2016 Quizmasters &#174;. All rights reserved. For more updates, drop a mail to pnanjundaswamy@scu.edu.	
+		<!-- If you like what you see, follow us on &nbsp; <a href="https://www.facebook.com"><img src="facebook.png" alt="facebook link" style="width:10px;" /></a>
+		&nbsp;<a href="https://www.twitter.com"><img src="twitter.png" alt="twitter link" style="width:10px;" /></a>	-->	
+	</p>
+</div>
+</div>
+</body>
+</html>
