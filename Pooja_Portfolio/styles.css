@@ -1,0 +1,235 @@
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+	width : 100%;
+	background-color:#eeeeee;
+}
+
+.container{
+	width : 960px;
+	margin : 0 auto;
+}
+.header {
+	width : 100%;
+	height : 15%;
+	background : #ADD8E6;
+	top : 0;
+	position : fixed;
+}
+
+#logo{
+	float:left;
+	padding-top:5px;
+	background-color:#ADD8E6;
+}
+
+img#hireme_image{
+	width:150px;
+	height:80px;
+}
+
+img#linkedin_image{
+	width:30px;
+	height:30px;
+}
+
+img#profile_pic{
+	width:300px;
+	height:350px;
+	border-radius:150px;
+}
+
+.footer {
+	width : 100%;
+	height : 15%;
+	background : #ADD8E6;
+	bottom : 0;
+	position : fixed;
+	text-align : center;
+	padding-top : 10px;
+}
+
+#left-section{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+    width:400px;
+    float:left;
+    padding:25px;
+	padding-top:30px;
+	text-align : center;
+}
+
+#center-section{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+    width:400px;
+    float:left;
+	padding-top:25px;
+	padding-bottom:25px;
+	text-align : center;
+}
+
+#right-section{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+	width : 400px;
+    float:right;
+	padding-top:30px;
+    padding-right:35px;
+	padding-left:64px;
+	text-align :left;
+}
+
+#pright-section{
+	color:black;
+	text-align : justify;
+}
+#pabtme{
+font-size : 1.5em;
+}
+
+a{
+text-decoration : none;
+color : red;
+}
+
+a:hover{
+color : yellow;
+}
+
+.nav{
+float : right;
+}
+
+li{
+list-style : none;
+float : left;
+margin-left : 50px;
+padding-top : 20px;
+}
+
+.content{
+background-color : black;
+}
+
+p{
+color : black;
+}
+
+h1{
+color : #ADD8E6;
+font-family: 'Open Sans', sans-serif !important;
+font-weight: 100; color: #22A39F;
+font-size:28px;
+}
+h2{
+color:red;
+}
+
+/*foll is education page related*/
+
+img#scu_image{
+	width:150px;
+	height:120px;
+}
+
+img#sjce_image{
+	width:150px;
+	height:120px;
+}
+
+#education_left_section{
+	margin-top: 80px;
+	background-color:#eeeeee;
+    height:600px;
+    width:47%;
+    float:left;
+    padding:25px;
+	padding-top:30px;
+	text-align : center;
+}
+
+#education_right_section{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+	width : 45%;
+    float:left;
+	padding:25px;
+	padding-right:32.5px;
+	padding-top:100px;
+	text-align : center;
+}
+
+/* contact page */
+
+img#contact_image{
+	width:250px;
+	height:250px;
+}
+
+#contactme{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+	width : 30%;
+    float:left;
+	padding:25px;
+	padding-right:32.5px;
+	padding-top:75px;
+	text-align : center;
+}
+#mailer{
+	margin-top: 90px;
+	background-color:#eeeeee;
+    height:600px;
+	width : 60%;
+    float:left;
+	padding:25px;
+	padding-right:32.5px;
+	padding-top:50px;
+	text-align : center;
+	color : blue;
+	vertical-align : top;
+}
+
+/*experience related styles below*/
+
+#exp1{
+	margin-top: 50px;
+	background-color:#eeeeee;	
+    height:700px;
+	width : 46%;
+    float:left;
+	padding:25px;
+	padding-right:32.5px;
+	padding-top:40px;
+	text-align : left;
+}
+
+#exp2{
+	margin-top: 40px;
+	background-color:#eeeeee;
+    height:600px;
+	width : 45%;
+    float:left;
+	padding:25px;
+	padding-right:32.5px;
+	padding-top:50px;
+	text-align : left;
+}
+
+table{
+width:75%;
+}
+
+td{
+vertical-align:top;
+text-align:center;
+}
